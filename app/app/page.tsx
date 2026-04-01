@@ -49,11 +49,9 @@ const dashboardTools = [
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { user, hasPaid, freeUsesRemaining, purchasedTools, resetTestAccess } = useAuth();
-  const [resetting, setResetting] = useState(false);
+  const { user, hasPaid, freeUsesRemaining, purchasedTools } = useAuth();
   const [syncingPurchase, setSyncingPurchase] = useState(false);
   const hasProcessedCheckoutRef = useRef(false);
-  const canReset = hasPaid || purchasedTools.length > 0 || freeUsesRemaining !== 3;
 
   useEffect(() => {
     if (!user || hasProcessedCheckoutRef.current) return;
@@ -85,23 +83,6 @@ export default function DashboardPage() {
             {hasPaid ? "Unlimited access unlocked" : `Free uses remaining: ${freeUsesRemaining}`}
           </p>
           {syncingPurchase ? <p className="mt-2 text-sm text-black/70">Finalizing your purchase...</p> : null}
-          {canReset ? (
-            <button
-              type="button"
-              onClick={async () => {
-                setResetting(true);
-                try {
-                  await resetTestAccess();
-                } finally {
-                  setResetting(false);
-                }
-              }}
-              className="mt-4 rounded-xl border border-black/15 bg-white px-3 py-2 text-sm font-medium text-black transition hover:bg-black/5 disabled:cursor-not-allowed disabled:opacity-60"
-              disabled={resetting}
-            >
-              {resetting ? "Resetting..." : "Reset to New User State"}
-            </button>
-          ) : null}
 
           <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {dashboardTools.map((tool) => {
