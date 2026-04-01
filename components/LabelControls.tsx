@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { ChangeEvent } from "react";
 import { Download, RotateCcw, Upload, X } from "lucide-react";
 
@@ -127,7 +128,7 @@ export default function LabelControls({
 
         {logoUrl ? (
           <div className="mt-4 rounded-xl border border-black/10 bg-[#f9fafb] p-3">
-            <img src={logoUrl} alt="Logo preview" className="h-20 w-20 rounded-md object-contain" />
+            <Image src={logoUrl} alt="Logo preview" width={80} height={80} unoptimized className="rounded-md object-contain" />
             <button
               type="button"
               onClick={onRemoveLogo}
